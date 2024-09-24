@@ -347,6 +347,7 @@ public abstract class AbstractRemoteSignatureServiceImpl {
 					throw new UnsupportedOperationException("Unsupported signature form : " + signatureForm);
 			}
 		}
+		timestampParameters.setEncodedTimeStampToken(remoteTimestampParameters.getEncodedTimeStampToken()); // ALISDEV - uprava predani časoveho razitka do parametru
 		return timestampParameters;
 	}
 

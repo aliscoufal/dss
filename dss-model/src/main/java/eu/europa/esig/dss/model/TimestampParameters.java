@@ -38,6 +38,11 @@ public abstract class TimestampParameters implements SerializableTimestampParame
 	protected DigestAlgorithm digestAlgorithm = DigestAlgorithm.SHA512;
 
 	/**
+	 * Uses for transfering signatures timestaps (ALISDEV)
+	 */
+	private byte[] encodedBcTimeStampToken; // alisdev prenos cas. razitka z KEO4
+
+	/**
 	 * Empty constructor
 	 */
 	protected TimestampParameters() {
@@ -66,6 +71,21 @@ public abstract class TimestampParameters implements SerializableTimestampParame
 	public void setDigestAlgorithm(final DigestAlgorithm digestAlgorithm) {
 		Objects.requireNonNull(digestAlgorithm, "DigestAlgorithm cannot be null!");
 		this.digestAlgorithm = digestAlgorithm;
+	}
+
+	/**
+	 * Returns the encoded timestamp token (ALISDEV)
+	 */
+	public byte[] getEncodedTimeStampToken() {
+		return encodedBcTimeStampToken; // alisdev prenos cas. razitka z KEO4
+	}
+
+	/**
+	 * Sets the encoded timestamp token (ALISDEV)
+	 * @param encodedTimeStampToken use to transfer custom timestamps
+	 */
+	public void setEncodedTimeStampToken( byte[] encodedTimeStampToken ) {
+		this.encodedBcTimeStampToken = encodedTimeStampToken;  // alisdev prenos cas. razitka z KEO4
 	}
 
 	@Override

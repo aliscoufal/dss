@@ -206,16 +206,22 @@ abstract class CAdESSignatureExtension implements SignatureExtension<CAdESSignat
 	 * @return {@link ASN1Object} representing a TimeStamp token attribute value
 	 */
 	protected ASN1Object getTimeStampAttributeValue(
-			final DSSMessageDigest timestampMessageDigest, final DigestAlgorithm timestampDigestAlgorithm,
+			final DSSMessageDigest timestampMessageDigest, final DigestAlgorithm timestampDigestAlgorithm, CAdESSignatureParameters parameters /* ALISDEV */,
 			final Attribute... attributesForTimestampToken) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("Message to timestamp is {}", timestampMessageDigest);
 		}
 
-		final TimestampBinary timeStampToken = tspSource.getTimeStampResponse(timestampDigestAlgorithm, timestampMessageDigest.getValue());
-		CMS cms = CMSUtils.parseToCMS(timeStampToken.getBytes());
+			// BEGIN ALISDEV uprava prebirani casoveho rezitka z KEO4
+			byte[] encoded = parameters.getSignatureTimestampParameters().getEncodedTimeStampToken();
+			if (encoded == null) {
+				 TimestampBinary timeStampToken = tspSource.getTimeStampResponse(timestampDigestAlgorithm, timestampMessageDigest.getValue());
+				 encoded = timeStampToken.getBytes();
+			}
+			// END ALISDEV
+            CMS cms = CMSUtils.parseToCMS(encoded);
 
-		// TODO (27/08/2014): attributesForTimestampToken cannot be null: to be modified
+        // TODO (27/08/2014): attributesForTimestampToken cannot be null: to be modified
 		if (attributesForTimestampToken != null) {
 			// timeStampToken contains one and only one signer
 			final SignerInformation signerInformation = cms.getSignerInfos().getSigners().iterator().next();
