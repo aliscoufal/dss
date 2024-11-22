@@ -115,7 +115,7 @@ public abstract class AbstractPdfBoxSignatureDrawer implements PdfBoxSignatureDr
 	 * @return {@link AnnotationBox}
 	 */
 	protected AnnotationBox getPageAnnotationBox(PDPage pdPage) {
-		PDRectangle mediaBox = pdPage.getMediaBox();
+        PDRectangle mediaBox = pdPage.getCropBox(); // alisdev - kvuli prevodum do PDF kde se vyuziva cropbox
 		return new AnnotationBox(mediaBox.getLowerLeftX(), mediaBox.getLowerLeftY(),
 				mediaBox.getUpperRightX(), mediaBox.getUpperRightY());
 	}
