@@ -38,7 +38,7 @@
 	
 	<dependencies>
 		<dependency>
-			<groupId>eu.europa.ec.joinup.sd-dss</groupId>
+			<groupId>cz.alis.forked.sd-dss</groupId>
 			<artifactId>dss-cms</artifactId>
 		</dependency>
         <dependency>
