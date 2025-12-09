@@ -151,7 +151,7 @@ public class RemoteSignatureParameters implements Serializable {
 	 * @deprecated since DSS 6.1. Please see {@code CertificateVerifier#alertOnExpiredCertificate}
 	 */
 	@Deprecated
-	private boolean signWithExpiredCertificate = false;
+	private boolean signWithExpiredCertificate = false; // ALISDEV - kompatibilita s 6.1
 
 	/**
 	 * This variable indicates if it is possible to generate ToBeSigned data without
@@ -176,6 +176,31 @@ public class RemoteSignatureParameters implements Serializable {
 	public RemoteSignatureParameters() {
 		// empty
 	}
+
+	// ALISDEV - kompatibilita s 6.1
+	/**
+	 * Indicates if it is possible to sign with an expired certificate. The default value is false.
+	 *
+	 * @return true if signature with an expired certificate is allowed
+	 * @deprecated since DSS 6.1. See {@code CertificateVerifier#setAlertOnExpiredCertificate}
+	 */
+	@Deprecated
+	public boolean isSignWithExpiredCertificate() {
+		return signWithExpiredCertificate;
+	}
+
+	/**
+	 * Allows to change the default behavior regarding the use of an expired certificate.
+	 *
+	 * @param signWithExpiredCertificate
+	 *            true if signature with an expired certificate is allowed
+	 * @deprecated since DSS 6.1. Please use {@code CertificateVerifier#setAlertOnExpiredCertificate} method instead
+	 */
+	@Deprecated
+	public void setSignWithExpiredCertificate(final boolean signWithExpiredCertificate) {
+		this.signWithExpiredCertificate = signWithExpiredCertificate;
+	}
+	// ALISDEV - kompatibilita s 6.1
 
 	/**
 	 * Gets the signing certificate
