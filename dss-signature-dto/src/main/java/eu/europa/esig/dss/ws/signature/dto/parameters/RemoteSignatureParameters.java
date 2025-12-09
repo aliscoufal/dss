@@ -146,6 +146,14 @@ public class RemoteSignatureParameters implements Serializable {
 	private RemoteTimestampParameters archiveTimestampParameters;
 
 	/**
+	 * This variable indicates if it is possible to sign with an expired certificate.
+	 *
+	 * @deprecated since DSS 6.1. Please see {@code CertificateVerifier#alertOnExpiredCertificate}
+	 */
+	@Deprecated
+	private boolean signWithExpiredCertificate = false;
+
+	/**
 	 * This variable indicates if it is possible to generate ToBeSigned data without
 	 * the signing certificate.
 	 */
@@ -637,6 +645,7 @@ public class RemoteSignatureParameters implements Serializable {
 				", signatureTimestampParameters=" + signatureTimestampParameters +
 				", archiveTimestampParameters=" + archiveTimestampParameters +
 				", generateTBSWithoutCertificate=" + generateTBSWithoutCertificate +
+				", signWithExpiredCertificate=" + signWithExpiredCertificate + // ALISDEV - kompatibilita s 6.1
 				", imageParameters=" + imageParameters +
 				", signatureIdToCounterSign='" + signatureIdToCounterSign + '\'' +
 				'}';
@@ -652,6 +661,7 @@ public class RemoteSignatureParameters implements Serializable {
 				&& base64UrlEncodedPayload == that.base64UrlEncodedPayload
 				&& base64UrlEncodedEtsiUComponents == that.base64UrlEncodedEtsiUComponents
 				&& generateTBSWithoutCertificate == that.generateTBSWithoutCertificate
+				&& signWithExpiredCertificate == that.signWithExpiredCertificate // ALISDEV - kompatibilita s 6.1
 				&& Objects.equals(signingCertificate, that.signingCertificate)
 				&& Objects.equals(certificateChain, that.certificateChain)
 				&& Objects.equals(detachedContents, that.detachedContents)
@@ -695,6 +705,7 @@ public class RemoteSignatureParameters implements Serializable {
 		result = 31 * result + Objects.hashCode(signatureTimestampParameters);
 		result = 31 * result + Objects.hashCode(archiveTimestampParameters);
 		result = 31 * result + Boolean.hashCode(generateTBSWithoutCertificate);
+		result = 31 * result + Boolean.hashCode(signWithExpiredCertificate); // ALISDEV - kompatibilita s 6.1
 		result = 31 * result + Objects.hashCode(imageParameters);
 		result = 31 * result + Objects.hashCode(signatureIdToCounterSign);
 		return result;
