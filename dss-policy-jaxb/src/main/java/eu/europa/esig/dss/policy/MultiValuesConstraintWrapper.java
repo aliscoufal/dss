@@ -23,6 +23,7 @@ package eu.europa.esig.dss.policy;
 import eu.europa.esig.dss.model.policy.MultiValuesRule;
 import eu.europa.esig.dss.policy.jaxb.MultiValuesConstraint;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -43,7 +44,28 @@ public class MultiValuesConstraintWrapper extends LevelConstraintWrapper impleme
 
     @Override
     public List<String> getValues() {
-        return constraint != null ? ((MultiValuesConstraint) constraint).getId() : Collections.emptyList();
+        // ALISDEV BEGIN
+        if (constraint == null) {
+            return Collections.emptyList();
+        }
+        
+        MultiValuesConstraint multiValuesConstraint = (MultiValuesConstraint) constraint;
+        List<String> values = new ArrayList<>();
+        
+        // ALISDEV - 6.3 Support for new format: <Id> elements
+        List<String> idList = multiValuesConstraint.getId();
+        if (idList != null && !idList.isEmpty()) {
+            values.addAll(idList);
+        }
+        
+        // ALISDEV - 6.1 Support for old format: value attribute
+        String valueAttribute = multiValuesConstraint.getValue();
+        if (valueAttribute != null && !valueAttribute.isEmpty()) {
+            values.add(valueAttribute);
+        }
+        
+        return values;
+        // ALISDEV END
     }
 
 }

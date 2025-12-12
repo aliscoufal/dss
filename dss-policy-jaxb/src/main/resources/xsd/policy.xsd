@@ -1174,6 +1174,7 @@
 				<xsd:sequence>
 					<xsd:element type="xsd:string" name="Id" maxOccurs="unbounded" minOccurs="0" />
 				</xsd:sequence>
+				<xsd:attribute type="xsd:string" name="value" />
 			</xsd:extension>
 		</xsd:complexContent>
 	</xsd:complexType>
